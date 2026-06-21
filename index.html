@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexflow - 실시간 프로젝트 협업 플랫폼</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome (Icons) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Main Style -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Background Elements -->
+    <div class="bg-glow bg-glow-1"></div>
+    <div class="bg-glow bg-glow-2"></div>
+
+    <!-- App Container -->
+    <div class="app-wrapper">
+        
+        <!-- Header / Navigation Bar -->
+        <header class="main-header">
+            <div class="logo-area">
+                <div class="logo-icon"><i class="fa-solid fa-cubes-stacked"></i></div>
+                <div class="logo-text">NEXFLOW <span class="logo-badge">PROTOTYPE</span></div>
+            </div>
+            <div class="header-actions">
+                <span class="system-time"><i class="fa-regular fa-clock"></i> <span id="clock-display">12:00</span></span>
+                <button id="reset-demo-btn" class="btn btn-secondary-outline btn-sm"><i class="fa-solid fa-arrows-rotate"></i> 데모 리셋</button>
+                <div class="user-profile-widget" id="user-profile-header">
+                    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=80&auto=format&fit=crop&q=60" alt="Profile" class="header-avatar">
+                    <span class="header-username">김관리 PM</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content Area: Split View -->
+        <main class="split-container">
+            
+            <!-- Left: Mobile App Simulator -->
+            <section class="simulator-panel">
+                <div class="panel-header">
+                    <h3><i class="fa-solid fa-mobile-screen-button"></i> Mobile App Simulator</h3>
+                    <p>Android / iOS 실시간 협업 뷰</p>
+                </div>
+                
+                <!-- Phone Wrapper -->
+                <div class="phone-frame">
+                    <div class="phone-notch">
+                        <div class="notch-camera"></div>
+                        <div class="notch-speaker"></div>
+                    </div>
+                    
+                    <!-- Phone Status Bar -->
+                    <div class="phone-status-bar">
+                        <span class="status-time" id="phone-clock">15:24</span>
+                        <div class="status-icons">
+                            <i class="fa-solid fa-signal"></i>
+                            <i class="fa-solid fa-wifi"></i>
+                            <i class="fa-solid fa-battery-three-quarters"></i>
+                        </div>
+                    </div>
+
+                    <!-- Phone Push Notification Banner Container -->
+                    <div class="phone-notification-container" id="phone-notification-area">
+                        <!-- Notification banner will slide down here -->
+                    </div>
+
+                    <!-- Phone Screen Content -->
+                    <div class="phone-screen" id="phone-screen-content">
+                        
+                        <!-- Screen: Login / Signup -->
+                        <div class="phone-view active" id="phone-login-view">
+                            <div class="phone-auth-container">
+                                <div class="phone-brand">
+                                    <div class="brand-logo"><i class="fa-solid fa-cubes-stacked"></i></div>
+                                    <h2>NEXFLOW</h2>
+                                    <p>실시간 협업을 언제 어디서나</p>
+                                </div>
+                                
+                                <form id="phone-login-form" class="auth-form">
+                                    <div class="form-group">
+                                        <label><i class="fa-regular fa-envelope"></i> 이메일</label>
+                                        <input type="email" id="phone-email-input" placeholder="example@nexflow.com" required value="user@nexflow.com">
+                                    </div>
+                                    <div class="form-group">
+                                        <label><i class="fa-solid fa-lock"></i> 비밀번호</label>
+                                        <input type="password" id="phone-pw-input" placeholder="••••••••" required value="123456">
+                                    </div>
+                                    <button type="submit" class="btn btn-primary btn-block">이메일로 로그인</button>
+                                </form>
+
+                                <div class="social-login-divider">
+                                    <span>또는 소셜 로그인</span>
+                                </div>
+
+                                <div class="social-login-buttons">
+                                    <button class="btn btn-social btn-google" onclick="app.quickLogin('Google')">
+                                        <i class="fa-brands fa-google"></i>
+                                    </button>
+                                    <button class="btn btn-social btn-apple" onclick="app.quickLogin('Apple')">
+                                        <i class="fa-brands fa-apple"></i>
+                                    </button>
+                                </div>
+
+                                <p class="auth-footer-text">계정이 없으신가요? <a href="#" id="go-to-signup">회원가입</a></p>
+                            </div>
+                        </div>
+
+                        <!-- Screen: Signup -->
+                        <div class="phone-view" id="phone-signup-view">
+                            <div class="phone-auth-container">
+                                <div class="phone-brand-sm">
+                                    <h2>회원가입</h2>
+                                    <p>새로운 협업 생태계에 참여하세요</p>
+                                </div>
+                                
+                                <form id="phone-signup-form" class="auth-form">
+                                    <div class="form-group">
+                                        <label>이름</label>
+                                        <input type="text" id="phone-reg-name" placeholder="홍길동" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>이메일 주소</label>
+                                        <input type="email" id="phone-reg-email" placeholder="example@nexflow.com" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>비밀번호</label>
+                                        <input type="password" id="phone-reg-pw" placeholder="6자리 이상" required>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary btn-block">가입 완료</button>
+                                </form>
+
+                                <p class="auth-footer-text">이미 계정이 있으신가요? <a href="#" id="go-to-login">로그인</a></p>
+                            </div>
+                        </div>
+
+                        <!-- Screen: Main Dashboard (App Tab 1) -->
+                        <div class="phone-view" id="phone-main-view">
+                            <div class="phone-header">
+                                <div class="phone-user-info">
+                                    <span class="greeting">안녕하세요,</span>
+                                    <h4 class="username-display">김관리님</h4>
+                                </div>
+                                <div class="phone-header-actions">
+                                    <div class="notification-badge-container">
+                                        <i class="fa-regular fa-bell" onclick="app.switchPhoneTab('notifications')"></i>
+                                        <span class="badge" id="phone-noti-count">3</span>
+                                    </div>
+                                    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=80&auto=format&fit=crop&q=60" alt="Avatar" class="avatar-sm">
+                                </div>
+                            </div>
+
+                            <div class="phone-scroll-content">
+                                <!-- Stats Card -->
+                                <div class="phone-card stats-summary-card">
+                                    <div class="stats-header">
+                                        <span>프로젝트 완료율</span>
+                                        <span class="percentage" id="phone-progress-percent">65%</span>
+                                    </div>
+                                    <div class="progress-bar-container">
+                                        <div class="progress-bar-fill" id="phone-progress-bar" style="width: 65%;"></div>
+                                    </div>
+                                    <div class="stats-details">
+                                        <div>
+                                            <span class="stats-num" id="phone-todo-count">4</span>
+                                            <span class="stats-label">할 일</span>
+                                        </div>
+                                        <div>
+                                            <span class="stats-num" id="phone-doing-count">3</span>
+                                            <span class="stats-label">진행 중</span>
+                                        </div>
+                                        <div>
+                                            <span class="stats-num" id="phone-done-count">8</span>
+                                            <span class="stats-label">완료</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- My Tasks list preview -->
+                                <div class="section-title-row">
+                                    <h5>나의 업무 리스트</h5>
+                                    <a href="#" onclick="app.switchPhoneTab('tasks')">모두 보기</a>
+                                </div>
+                                <div class="phone-tasks-preview" id="phone-tasks-preview-list">
+                                    <!-- Dynamic elements inserted here -->
+                                </div>
+
+                                <!-- Chat room shortcut -->
+                                <div class="section-title-row">
+                                    <h5>팀 실시간 피드</h5>
+                                    <a href="#" onclick="app.switchPhoneTab('chat')">채팅 입장</a>
+                                </div>
+                                <div class="phone-chat-preview-card" onclick="app.switchPhoneTab('chat')">
+                                    <div class="chat-preview-header">
+                                        <span class="chat-room-title"># 프로젝트-런칭-채널</span>
+                                        <span class="chat-time" id="chat-preview-time">방금 전</span>
+                                    </div>
+                                    <p class="chat-last-message" id="chat-preview-msg">마지막 메시지가 없습니다.</p>
+                                </div>
+                            </div>
+                            
+                            <!-- Floating Action Button for Task Creation -->
+                            <button class="fab-btn" onclick="app.openPhoneTaskModal()"><i class="fa-solid fa-plus"></i></button>
+                        </div>
+
+                        <!-- Screen: Tasks List (App Tab 2) -->
+                        <div class="phone-view" id="phone-tasks-view">
+                            <div class="phone-header-simple">
+                                <h4 class="page-title">업무 리스트</h4>
+                                <button class="btn btn-icon-only" onclick="app.openPhoneTaskModal()"><i class="fa-solid fa-circle-plus"></i></button>
+                            </div>
+                            <div class="phone-filter-bar">
+                                <button class="filter-chip active" onclick="app.filterPhoneTasks('all', this)">전체</button>
+                                <button class="filter-chip" onclick="app.filterPhoneTasks('todo', this)">대기</button>
+                                <button class="filter-chip" onclick="app.filterPhoneTasks('doing', this)">진행</button>
+                                <button class="filter-chip" onclick="app.filterPhoneTasks('done', this)">완료</button>
+                            </div>
+                            <div class="phone-scroll-content">
+                                <div class="phone-task-list" id="phone-task-list-container">
+                                    <!-- Dynamic items -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Screen: Real-time Chat (App Tab 3) -->
+                        <div class="phone-view" id="phone-chat-view">
+                            <div class="phone-header-chat">
+                                <div class="chat-info">
+                                    <h4 class="page-title">실시간 협업 채널</h4>
+                                    <span class="online-users-count"><span class="dot-online"></span> 5명 접속 중</span>
+                                </div>
+                            </div>
+                            <div class="phone-chat-messages" id="phone-chat-box">
+                                <!-- Dynamic Chat Bubble -->
+                            </div>
+                            <form id="phone-chat-form" class="phone-chat-input-bar">
+                                <input type="text" id="phone-chat-input" placeholder="메시지를 입력하세요..." autocomplete="off">
+                                <button type="submit" class="chat-send-btn"><i class="fa-solid fa-paper-plane"></i></button>
+                            </form>
+                        </div>
+
+                        <!-- Screen: Notifications (App Tab 4) -->
+                        <div class="phone-view" id="phone-notifications-view">
+                            <div class="phone-header-simple">
+                                <h4 class="page-title">알림 센터</h4>
+                                <button class="btn-clear-all" onclick="app.clearAllNotifications()">모두 삭제</button>
+                            </div>
+                            <div class="phone-scroll-content">
+                                <div class="phone-noti-list" id="phone-noti-list-container">
+                                    <!-- Notifications -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Screen: Settings / Profile (App Tab 5) -->
+                        <div class="phone-view" id="phone-settings-view">
+                            <div class="phone-header-simple">
+                                <h4 class="page-title">설정</h4>
+                            </div>
+                            <div class="phone-scroll-content">
+                                <div class="profile-card-large">
+                                    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=120&auto=format&fit=crop&q=60" alt="Profile" class="avatar-large">
+                                    <h4 class="username-display">김관리님</h4>
+                                    <p class="user-role">Product Manager</p>
+                                </div>
+
+                                <div class="settings-menu">
+                                    <div class="menu-item" onclick="app.triggerDemoReminder()">
+                                        <div class="menu-item-left">
+                                            <i class="fa-solid fa-clock-rotate-left"></i>
+                                            <span>마감일 리마인더 시뮬레이션</span>
+                                        </div>
+                                        <i class="fa-solid fa-chevron-right"></i>
+                                    </div>
+                                    <div class="menu-item" onclick="app.logout()">
+                                        <div class="menu-item-left text-danger">
+                                            <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                                            <span>로그아웃</span>
+                                        </div>
+                                        <i class="fa-solid fa-chevron-right"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div> <!-- End Phone Screen -->
+
+                    <!-- Phone Bottom Tab Bar -->
+                    <nav class="phone-tab-bar" id="phone-navigation-bar">
+                        <div class="tab-item active" onclick="app.switchPhoneTab('main', this)">
+                            <i class="fa-solid fa-house"></i>
+                            <span>홈</span>
+                        </div>
+                        <div class="tab-item" onclick="app.switchPhoneTab('tasks', this)">
+                            <i class="fa-solid fa-list-check"></i>
+                            <span>업무</span>
+                        </div>
+                        <div class="tab-item" onclick="app.switchPhoneTab('chat', this)">
+                            <i class="fa-solid fa-comments"></i>
+                            <span>채팅</span>
+                        </div>
+                        <div class="tab-item" onclick="app.switchPhoneTab('notifications', this)">
+                            <i class="fa-solid fa-bell"></i>
+                            <span>알림</span>
+                        </div>
+                        <div class="tab-item" onclick="app.switchPhoneTab('settings', this)">
+                            <i class="fa-solid fa-gear"></i>
+                            <span>설정</span>
+                        </div>
+                    </nav>
+
+                    <div class="phone-home-indicator"></div>
+                </div> <!-- End Phone Frame -->
+            </section>
+
+            <!-- Right: Web Admin Page Dashboard -->
+            <section class="dashboard-panel">
+                <div class="panel-header">
+                    <h3><i class="fa-solid fa-desktop"></i> Web Management Dashboard</h3>
+                    <p>실시간 연동되는 관리자 대시보드 및 칸반 제어판</p>
+                </div>
+                
+                <div class="dashboard-content">
+                    
+                    <!-- Web Admin Tabs -->
+                    <div class="web-nav-tabs">
+                        <button class="web-tab-btn active" onclick="app.switchWebTab('dashboard', this)">
+                            <i class="fa-solid fa-chart-line"></i> 대시보드 요약
+                        </button>
+                        <button class="web-tab-btn" onclick="app.switchWebTab('kanban', this)">
+                            <i class="fa-solid fa-table-columns"></i> 칸반 보드 (업무 상태 관리)
+                        </button>
+                        <button class="web-tab-btn" onclick="app.switchWebTab('members', this)">
+                            <i class="fa-solid fa-users"></i> 프로젝트 참여자
+                        </button>
+                    </div>
+
+                    <!-- Web Tab 1: Dashboard Overview -->
+                    <div class="web-tab-pane active" id="web-pane-dashboard">
+                        <!-- Upper Metrics Grid -->
+                        <div class="metrics-grid">
+                            <div class="metric-card">
+                                <div class="metric-icon bg-blue-trans"><i class="fa-solid fa-diagram-project"></i></div>
+                                <div class="metric-details">
+                                    <span class="metric-title">진행 중인 프로젝트</span>
+                                    <h2 class="metric-value">1</h2>
+                                </div>
+                            </div>
+                            <div class="metric-card">
+                                <div class="metric-icon bg-purple-trans"><i class="fa-solid fa-list-check"></i></div>
+                                <div class="metric-details">
+                                    <span class="metric-title">전체 업무 개수</span>
+                                    <h2 class="metric-value" id="web-total-tasks-count">0</h2>
+                                </div>
+                            </div>
+                            <div class="metric-card">
+                                <div class="metric-icon bg-green-trans"><i class="fa-solid fa-circle-check"></i></div>
+                                <div class="metric-details">
+                                    <span class="metric-title">완료된 업무</span>
+                                    <h2 class="metric-value" id="web-done-tasks-count">0</h2>
+                                </div>
+                            </div>
+                            <div class="metric-card">
+                                <div class="metric-icon bg-orange-trans"><i class="fa-solid fa-users"></i></div>
+                                <div class="metric-details">
+                                    <span class="metric-title">팀원 수</span>
+                                    <h2 class="metric-value" id="web-members-count">5명</h2>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Graphical Statistics and Feed -->
+                        <div class="visuals-row">
+                            <!-- Visual Chart Card 1 -->
+                            <div class="visual-card chart-card">
+                                <h4>프로젝트 진행률 (완료율 통계)</h4>
+                                <div class="chart-container">
+                                    <div class="radial-progress-widget">
+                                        <svg viewBox="0 0 36 36" class="circular-chart">
+                                            <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                            <path class="circle" id="web-chart-radial-fill" stroke-dasharray="0, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                        </svg>
+                                        <div class="radial-info">
+                                            <span class="percentage" id="web-radial-percentage">0%</span>
+                                            <span class="label">완료율</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Visual Chart Card 2 -->
+                            <div class="visual-card bar-chart-card">
+                                <h4>담당자별 업무 할당량</h4>
+                                <div class="bar-chart-container" id="assignee-bar-chart">
+                                    <!-- Dynamic bars rendered here -->
+                                </div>
+                            </div>
+
+                            <!-- Real-time Live activity Feed -->
+                            <div class="visual-card activity-feed-card">
+                                <h4><span class="pulse-dot"></span> 실시간 액티비티 피드</h4>
+                                <div class="activity-feed" id="web-activity-feed">
+                                    <!-- Dynamic feed logs -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Web Tab 2: Kanban Board -->
+                    <div class="web-tab-pane" id="web-pane-kanban">
+                        <div class="kanban-header">
+                            <div class="kanban-info">
+                                <h4>업무 보드 (드래그하여 상태 변경)</h4>
+                                <p>업무 카드를 다른 칼럼으로 드래그하면, 왼쪽 모바일 시뮬레이터에 실시간 반영되며 알림이 전송됩니다.</p>
+                            </div>
+                            <button class="btn btn-primary" onclick="app.openPhoneTaskModal()"><i class="fa-solid fa-plus"></i> 새 업무 추가</button>
+                        </div>
+                        <div class="kanban-board">
+                            <!-- Column 1: TODO -->
+                            <div class="kanban-column" id="col-todo" ondragover="app.allowDrop(event)" ondrop="app.drop(event, 'todo')">
+                                <div class="column-header">
+                                    <span class="column-title"><span class="badge-dot todo"></span> 대기 중</span>
+                                    <span class="column-count" id="count-todo">0</span>
+                                </div>
+                                <div class="column-cards-container" id="container-todo">
+                                    <!-- Cards dynamic -->
+                                </div>
+                            </div>
+
+                            <!-- Column 2: DOING -->
+                            <div class="kanban-column" id="col-doing" ondragover="app.allowDrop(event)" ondrop="app.drop(event, 'doing')">
+                                <div class="column-header">
+                                    <span class="column-title"><span class="badge-dot doing"></span> 진행 중</span>
+                                    <span class="column-count" id="count-doing">0</span>
+                                </div>
+                                <div class="column-cards-container" id="container-doing">
+                                    <!-- Cards dynamic -->
+                                </div>
+                            </div>
+
+                            <!-- Column 3: DONE -->
+                            <div class="kanban-column" id="col-done" ondragover="app.allowDrop(event)" ondrop="app.drop(event, 'done')">
+                                <div class="column-header">
+                                    <span class="column-title"><span class="badge-dot done"></span> 완료됨</span>
+                                    <span class="column-count" id="count-done">0</span>
+                                </div>
+                                <div class="column-cards-container" id="container-done">
+                                    <!-- Cards dynamic -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Web Tab 3: Member Management -->
+                    <div class="web-tab-pane" id="web-pane-members">
+                        <div class="member-management-container">
+                            <div class="member-input-row">
+                                <div class="form-inline-group">
+                                    <label>팀원 초대</label>
+                                    <input type="email" id="invite-member-email" placeholder="초대할 팀원의 이메일을 입력하세요...">
+                                </div>
+                                <div class="form-inline-group" style="max-width: 150px;">
+                                    <label>역할</label>
+                                    <select id="invite-member-role">
+                                        <option value="Product Manager">Product Manager</option>
+                                        <option value="UX/UI Designer">UX/UI Designer</option>
+                                        <option value="Developer">Developer</option>
+                                        <option value="QA Engineer">QA Engineer</option>
+                                    </select>
+                                </div>
+                                <button class="btn btn-primary" onclick="app.inviteMember()"><i class="fa-solid fa-user-plus"></i> 초대하기</button>
+                            </div>
+
+                            <table class="members-table">
+                                <thead>
+                                    <tr>
+                                        <th>팀원</th>
+                                        <th>이메일</th>
+                                        <th>역할</th>
+                                        <th>상태</th>
+                                        <th>작업</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="web-members-table-body">
+                                    <!-- Dynamic Table Rows -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Global Modal: Task Create / Edit Modal -->
+    <div class="modal-backdrop" id="task-modal">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h4 id="task-modal-title">업무 생성</h4>
+                <button class="modal-close" onclick="app.closeTaskModal()"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <form id="task-form">
+                <input type="hidden" id="task-edit-id">
+                <div class="form-group">
+                    <label>업무 제목</label>
+                    <input type="text" id="task-title-input" placeholder="업무 내용을 요약해서 작성하세요..." required>
+                </div>
+                <div class="form-group">
+                    <label>업무 상세 설명</label>
+                    <textarea id="task-desc-input" placeholder="자세한 가이드를 작성하세요..." rows="3"></textarea>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>담당자</label>
+                        <select id="task-assignee-input" required>
+                            <!-- Dynamic Option list of members -->
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>상태</label>
+                        <select id="task-status-input" required>
+                            <option value="todo">대기 중</option>
+                            <option value="doing">진행 중</option>
+                            <option value="done">완료</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>마감일 설정</label>
+                    <input type="date" id="task-due-input" required>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary-outline" onclick="app.closeTaskModal()">취소</button>
+                    <button type="submit" class="btn btn-primary" id="task-submit-btn">생성하기</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Script loading -->
+    <script src="app.js"></script>
+</body>
+</html>
